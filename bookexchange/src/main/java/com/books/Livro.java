@@ -1,13 +1,43 @@
-package com.crud;
+package com.books;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+
+@Entity 
 public class Livro {
-    public String titulo;
-    public String autor;
-    public int edicao;
-    public int idLivro;
-    public String tipoCapa;
-    public String lingua;
 
+    @Id 
+    @GeneratedValue (strategy = GenerationType.IDENTITY)
+    private int id;
+
+    public String toDString(){
+        return "Título: " + titulo + ", Autor: " + autor + "Edição: " + edicao + "Id do Livro: " + idLivro + "Tipo de Capa: " + tipoCapa + "Língua: " + lingua;
+    }
+
+    public int getId(){
+        return id;
+    }
+
+    public void setId(int id){ 
+        this.id = id;
+    }
+
+    //private so é acessivel dentro da classe (Livro), qualquer codigo fora da public class livro nao consegue aceder
+    //protected coisas fora do package conseguem aceder, ou que herdem 
+
+    //o public, private e protected são modificadores de visibilidade/acesso (visibility modifiers)
+    //o static é um modificador que não é de visibilidade
+
+    //o valor default das classes é null, do int é 0
+
+    private String titulo;
+    private String autor;
+    private int edicao;
+    private int idLivro;
+    private String tipoCapa;
+    private String lingua;
     
     public void livro (String titulo, String autor, int edicao, int idLivro, String tipoCapa, String lingua) {
         this.titulo = titulo;

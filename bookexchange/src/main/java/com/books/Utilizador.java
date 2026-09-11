@@ -1,4 +1,4 @@
-package com.crud;
+package com.books;
 
 public class Utilizador {
     int idUtilizador;

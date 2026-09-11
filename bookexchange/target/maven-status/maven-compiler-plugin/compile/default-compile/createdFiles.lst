@@ -1,0 +1,9 @@
+com\books\Repository.class
+com\books\Controller.class
+com\books\Utilizador.class
+com\books\Service.class
+com\books\RestAplication.class
+com\books\Livro.class
+com\books\Proposta.class
+com\books\App.class
+com\books\Oferta.class

@@ -1,4 +1,4 @@
-package com.crud;
+package com.books;
 
 /**
  * Hello world!
