@@ -14,15 +14,15 @@ public class Livro {
 
     @Id 
     @GeneratedValue (strategy = GenerationType.IDENTITY)
-    private int idLivro;
+    private int id;
 
     
-    public int getIdLivro(){
-        return idLivro;
+    public int getId(){
+        return id;
     }
 
-    public void setIdLivro(int idLivro){ 
-        this.idLivro = idLivro;
+    public void setId(int id){ 
+        this.id = id;
     }
 
     //private so é acessivel dentro da classe (Livro), qualquer codigo fora da public class livro nao consegue aceder

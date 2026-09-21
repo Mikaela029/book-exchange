@@ -21,11 +21,11 @@ public class Proposta {
     }
     
     @ManyToOne
-    @JoinColumn(name = "idOferta", referencedColumnName = "idOferta")
+    @JoinColumn(name = "idOferta")
     private Oferta oferta;
 
     @ManyToOne
-    @JoinColumn(name = "idLivro", referencedColumnName = "idLivro")
+    @JoinColumn(name = "idLivro")
     private Livro livro;
 
     @ManyToOne

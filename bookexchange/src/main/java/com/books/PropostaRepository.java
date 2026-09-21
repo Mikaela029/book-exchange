@@ -13,15 +13,6 @@ public class PropostaRepository {
     private EntityManager em;
 
    public void createProposta(Proposta proposta) {
-    if (proposta.getUtilizador() != null) { //verifica se existe user associado a proposta
-        Utilizador utilizador = em.find(Utilizador.class, proposta.getUtilizador().getId()); //em.find procura o user na base de dados
-        proposta.setUtilizador(utilizador); //setUtilizador() associa esse user a proposta
-
-    if (utilizador == null){
-        throw new IllegalArgumentException("Utilizador não encontrado"); // se o id nao existir, o find() devolve null e a proposta pode falhar por nao ter user valido
-        }    
-
-    }
 
     em.persist(proposta); //guarda a resposta
 }

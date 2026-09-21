@@ -12,7 +12,7 @@ public class Oferta {
     
     @Id 
     @GeneratedValue (strategy = GenerationType.IDENTITY)
-    private int idOferta;
+    private int id;
     private String localizacao;
 
     @Override 
@@ -29,12 +29,12 @@ public class Oferta {
     private Utilizador utilizador; 
 
     //getters setters
-    public int getIdOferta() {
-        return idOferta;
+    public int getId() {
+        return id;
     }
 
-    public void setIdOferta(int idOferta) {
-        this.idOferta = idOferta;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getLocalizacao() {
