@@ -1,34 +1,42 @@
 package com.books;
 
-public class Utilizador {
-    int idUtilizador;
-    char userName;
-    String nome;
-    char email;
-    char password;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 
-public void utilzador(int idUtilizador, char userName, String nome, char email, char password){
-    this.idUtilizador = idUtilizador;
+@Entity 
+public class Utilizador {
+
+    @Id 
+    @GeneratedValue (strategy = GenerationType.IDENTITY)
+    private int id;
+
+    public int getId(){
+        return id;
+    }
+
+    public void setId(int id){ 
+        this.id = id;
+    }
+
+    String userName;
+    String nome;
+    String email;
+    String password;
+
+public void utilizador(String userName, String nome, String email, String password){
     this.userName = userName;
     this.nome = nome;
     this.email = email;
     this.password = password;
-
 }
 
-public int getIdUtilizador() {
-    return idUtilizador;
-}
-
-public void setIdUtilizador(int idUtilizador) {
-    this.idUtilizador = idUtilizador;
-}
-
-public char getUserName() {
+public String getUserName() {
     return userName;
 }
 
-public void setUserName(char userName) {
+public void setUserName(String userName) {
     this.userName = userName;
 }
 
@@ -40,21 +48,26 @@ public void setNome(String nome) {
     this.nome = nome;
 }
 
-public char getEmail() {
+public String getEmail() {
     return email;
 }
 
-public void setEmail(char email) {
+public void setEmail(String email) {
     this.email = email;
 }
 
-public char getPassword() {
+public String getPassword() {
     return password;
 }
 
-public void setPassword(char password) {
+public void setPassword(String password) {
     this.password = password;
 }
 
-    
+@Override
+public String toString() {
+    return "Utilizador [id=" + id + ", idUtilizador=" + ", userName=" + userName + ", nome=" + nome
+            + ", email=" + email + ", password=" + password + "]";
+}
+
 }

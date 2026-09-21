@@ -8,7 +8,7 @@ import jakarta.persistence.PersistenceContext;
 
 
 @ApplicationScoped
-public class Repository {
+public class BookRepository {
 
     @PersistenceContext
     private EntityManager em; // o entity manager é o que fala com a base de dados, faz a comunicaçao entre as bases de dados (persistence)

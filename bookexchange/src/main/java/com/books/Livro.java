@@ -1,3 +1,7 @@
+/*
+A entidade Livro.java só serve para guardar os dados do livro e mapear para a base de dados.
+*/
+
 package com.books;
 
 import jakarta.persistence.Entity;
@@ -10,18 +14,15 @@ public class Livro {
 
     @Id 
     @GeneratedValue (strategy = GenerationType.IDENTITY)
-    private int id;
+    private int idLivro;
 
-    public String toDString(){
-        return "Título: " + titulo + ", Autor: " + autor + "Edição: " + edicao + "Id do Livro: " + idLivro + "Tipo de Capa: " + tipoCapa + "Língua: " + lingua;
+    
+    public int getIdLivro(){
+        return idLivro;
     }
 
-    public int getId(){
-        return id;
-    }
-
-    public void setId(int id){ 
-        this.id = id;
+    public void setIdLivro(int idLivro){ 
+        this.idLivro = idLivro;
     }
 
     //private so é acessivel dentro da classe (Livro), qualquer codigo fora da public class livro nao consegue aceder
@@ -35,18 +36,15 @@ public class Livro {
     private String titulo;
     private String autor;
     private int edicao;
-    private int idLivro;
     private String tipoCapa;
     private String lingua;
     
-    public void livro (String titulo, String autor, int edicao, int idLivro, String tipoCapa, String lingua) {
+    public void livro (String titulo, String autor, int edicao, String tipoCapa, String lingua) {
         this.titulo = titulo;
         this.autor = autor;
         this.edicao = edicao;
-        this.idLivro = idLivro;
         this.tipoCapa = tipoCapa;
         this.lingua = lingua;
-        
     }
     
     public String getTitulo(){
@@ -73,14 +71,6 @@ public class Livro {
         this.edicao = edicao;
     }
 
-    public int getIdLivro(){
-        return idLivro;
-    }
-
-    public void setIdLivro(int idLivro){
-        this.idLivro = idLivro;
-    }
-
     public String getTipoCapa(){
         return tipoCapa;
     }
@@ -97,6 +87,10 @@ public class Livro {
         this.lingua = lingua;
     }
 
+    @Override 
+    public String toString(){
+            return "Título: " + titulo + ", Autor: " + autor + "Edição: " + edicao + "Tipo de Capa: " + tipoCapa + "Língua: " + lingua;
+        }
     }
 
     

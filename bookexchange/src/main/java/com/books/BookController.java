@@ -6,20 +6,14 @@ import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.core.Response;
 
-/*CRUD
-
-Criar um endpoint (“/) que permita fazer operações CRUD:
-        Usar o método POST para criar um novo livro.
-        Usar o método GET para ler todos os livro.
-*/
 
 //os parenteses são para o metodo, se não tiver nao necessita
 
 @Path("/livro")
-public class Controller {
+public class BookController {
 
 @Inject
-private Service service; 
+private BookService service; 
 
         @POST //so posso utilizar os metodos como o responseBuiler.entity porque estabeleci que o tipo a usar seria o Response
         public Response createBook(Livro livro) { //o tipo definido é Response. nesta linha é para o metodo saber que tipos de dados os netodos vai devolver
@@ -44,5 +38,5 @@ private Service service;
         public Response getAllBooks() {
                 return Response.ok(service.getAllBooks()).build();
         }        
-                
+        
 }
