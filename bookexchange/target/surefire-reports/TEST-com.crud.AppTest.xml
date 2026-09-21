@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" name="com.crud.AppTest" time="0.051" tests="1" errors="0" skipped="0" failures="0">
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" name="com.crud.AppTest" time="0.032" tests="1" errors="0" skipped="0" failures="0">
   <properties>
     <property name="java.specification.version" value="21"/>
     <property name="sun.cpu.isalist" value="amd64"/>
@@ -15,7 +15,7 @@
     <property name="sun.java.launcher" value="SUN_STANDARD"/>
     <property name="user.country" value="PT"/>
     <property name="sun.boot.library.path" value="C:\Program Files\Eclipse Adoptium\jdk-21.0.11.10-hotspot\bin"/>
-    <property name="sun.java.command" value="C:\Users\mikae\AppData\Local\Temp\surefire4544593379336164635\surefirebooter11944515011472285855.jar C:\Users\mikae\AppData\Local\Temp\surefire4544593379336164635 2026-09-21T14-03-47_550-jvmRun1 surefire15076384668357576437tmp surefire_07780851437157594495tmp"/>
+    <property name="sun.java.command" value="C:\Users\mikae\AppData\Local\Temp\surefire5206713367613231913\surefirebooter16794631354314459141.jar C:\Users\mikae\AppData\Local\Temp\surefire5206713367613231913 2026-09-21T15-30-21_178-jvmRun1 surefire17660511792557667768tmp surefire_016503339556737318259tmp"/>
     <property name="jdk.debug" value="release"/>
     <property name="surefire.test.class.path" value="C:\Users\mikae\book-exchange\bookexchange\target\test-classes;C:\Users\mikae\book-exchange\bookexchange\target\classes;C:\Users\mikae\.m2\repository\junit\junit\4.11\junit-4.11.jar;C:\Users\mikae\.m2\repository\org\hamcrest\hamcrest-core\1.3\hamcrest-core-1.3.jar;C:\Users\mikae\.m2\repository\com\fasterxml\jackson\core\jackson-databind\2.21.5\jackson-databind-2.21.5.jar;C:\Users\mikae\.m2\repository\com\fasterxml\jackson\core\jackson-annotations\2.21\jackson-annotations-2.21.jar;C:\Users\mikae\.m2\repository\com\fasterxml\jackson\core\jackson-core\2.21.5\jackson-core-2.21.5.jar;C:\Users\mikae\.m2\repository\jakarta\servlet\jakarta.servlet-api\6.1.0\jakarta.servlet-api-6.1.0.jar;C:\Users\mikae\.m2\repository\jakarta\ws\rs\jakarta.ws.rs-api\3.1.0\jakarta.ws.rs-api-3.1.0.jar;C:\Users\mikae\.m2\repository\jakarta\enterprise\jakarta.enterprise.cdi-api\4.1.0\jakarta.enterprise.cdi-api-4.1.0.jar;C:\Users\mikae\.m2\repository\jakarta\enterprise\jakarta.enterprise.lang-model\4.1.0\jakarta.enterprise.lang-model-4.1.0.jar;C:\Users\mikae\.m2\repository\jakarta\annotation\jakarta.annotation-api\3.0.0\jakarta.annotation-api-3.0.0.jar;C:\Users\mikae\.m2\repository\jakarta\el\jakarta.el-api\6.0.0\jakarta.el-api-6.0.0.jar;C:\Users\mikae\.m2\repository\jakarta\interceptor\jakarta.interceptor-api\2.2.0\jakarta.interceptor-api-2.2.0.jar;C:\Users\mikae\.m2\repository\jakarta\inject\jakarta.inject-api\2.0.1\jakarta.inject-api-2.0.1.jar;C:\Users\mikae\.m2\repository\jakarta\persistence\jakarta.persistence-api\3.0.0\jakarta.persistence-api-3.0.0.jar;C:\Users\mikae\.m2\repository\jakarta\transaction\jakarta.transaction-api\2.0.0\jakarta.transaction-api-2.0.0.jar;"/>
     <property name="sun.cpu.endian" value="little"/>
@@ -30,7 +30,7 @@
     <property name="line.separator" value="&#10;"/>
     <property name="java.vm.specification.vendor" value="Oracle Corporation"/>
     <property name="java.specification.name" value="Java Platform API Specification"/>
-    <property name="surefire.real.class.path" value="C:\Users\mikae\AppData\Local\Temp\surefire4544593379336164635\surefirebooter11944515011472285855.jar"/>
+    <property name="surefire.real.class.path" value="C:\Users\mikae\AppData\Local\Temp\surefire5206713367613231913\surefirebooter16794631354314459141.jar"/>
     <property name="user.script" value=""/>
     <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
     <property name="java.runtime.version" value="21.0.11+10-LTS"/>
@@ -59,5 +59,5 @@
     <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
     <property name="java.class.version" value="65.0"/>
   </properties>
-  <testcase name="testApp" classname="com.crud.AppTest" time="0.001"/>
+  <testcase name="testApp" classname="com.crud.AppTest" time="0.005"/>
 </testsuite>

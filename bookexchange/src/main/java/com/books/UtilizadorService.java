@@ -23,4 +23,9 @@ public class UtilizadorService {
     public List<Utilizador> getAllUsers() {
         return repository.getAllUsers();
     }
+
+    public Utilizador login(String email, String password){
+        return repository.login(email, password);
+    }
+
 }
