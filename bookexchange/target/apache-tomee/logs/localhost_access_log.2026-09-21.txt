@@ -1,3 +1,0 @@
-127.0.0.1 - - [21/Sep/2026:15:30:38 +0100] "POST /api/utilizador HTTP/1.1" 200 100
-127.0.0.1 - - [21/Sep/2026:15:30:42 +0100] "GET /api/utilizador/login?email=joana%40hotmail.com&password=m1234 HTTP/1.1" 200 100
-127.0.0.1 - - [21/Sep/2026:15:30:52 +0100] "GET /api/utilizador/login?email=joana%40hotmail.com&password=m123 HTTP/1.1" 401 28
