@@ -4,6 +4,7 @@ package com.books;
 
 import jakarta.ws.rs.Produces;
 import jakarta.inject.Inject;
+import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Path;
@@ -18,6 +19,8 @@ public class UtilizadorController {
     private UtilizadorService service;
 
     @POST
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
     public Response createUser(Utilizador utilizador) {
         service.createUser(utilizador);
         return Response.ok(utilizador).build();

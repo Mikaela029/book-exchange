@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang ="pt">
+    <head>
+       <meta charset="UTF-8">
+       <link rel="stylesheet" href="style.css">
+       <meta name="viewport" content="width=device-width, initial-scale=1">  
+        
+       <title>Criar conta</title>
+    </head>
+    <body>
+        <h1>Criar Conta</h1>
+
+        <form id= "form-registo" class="form-registo"> <!--id permite ao javascript encontrar o formulario, class mantem os estilos-->
+
+            <label for ="nome">Nome</label>
+            <input id="nome" name="nome" type="text" required> <!--type="text": texto comum, como o nome-->
+
+            <label for="email">Email</label>
+            <input id="email" name="email" type="email" required> <!--type="email": verifica se o formato parece valido-->
+
+            <label for="password">Palavra-passe</label>
+            <input id="password" name="password" type="password" required> <!--type="password": oculta caracteres enquanto estao a ser escritos-->
+
+
+            <button type="submit">Criar Conta</button>
+
+            <a href="paginaInicial.html" class="form-registo button">Página Inicial</a>
+        </form>
+
+        <p id="mensagem"></p> <!--o p cria linha vazia, o id="mensagem" permite ao javascript encontrar o resultado e apresentar uma mensagem-->
+
+        <script>
+            document.getElementById("form-registo").addEventListener("submit", async function (evento) { //getElementById("form-registo") encontra o formulário. addEventListener("submit", ...) executa a função quando o utilizador clica em Criar Conta.
+                evento.preventDefault(); //evento.preventDefault() impede o comportamento normal do formulário, que recarregaria a página
+
+                //const utilizador guarda o objeto com nome, email e palavra-passe
+                const utilizador = { // recolhe os valores dos campos Nome, Email e Palavra-passe.
+                    nome: document.getElementById("nome").value,
+                    email: document.getElementById("email").value,
+                    password: document.getElementById("password").value
+                };
+
+                try{
+                    //const resposta guarda a resposta recebida do servidor.
+                    const resposta = await fetch("/api/utilizador", { //fetch(...) envia esses dados ao servidor com um pedido POST
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" }, //O cabeçalho indica que o conteúdo enviado é JSON
+                        body: JSON.stringify(utilizador) //JSON.stringify(utilizador) converte o objeto para esse formato.
+                    });
+
+                    document.getElementById("mensagem").textContent = //eleciona o parágrafo com id="mensagem" e prepara para alterar o texto que aparece nele.
+                    resposta.ok? "Conta criada com sucesso. " : "Não foi possível criar a conta."; //escolhe a mensagem conforme a resposta do servidor
+                    //? : significa “se... senão”, resposta.ok é verdadeiro quando o servidor responde com um estado HTTP de sucesso.
+                  }catch(erro){ //mostra uma mensagem se não for possível contactar o servidor, por exemplo, se estiver desligado.
+                    document.getElementById("mensagem").textContent =
+                    "Não foi possível contactar o servidor.";
+                }
+            })
+        </script>
+
+    </body>
+</html>

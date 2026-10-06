@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 
-<html lang = "en">
+<html lang = "pt">
     <head>
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/dist/css/bootstrap.min.css" 
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" 
 rel="stylesheet"> 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/dist/js/bootstrap.bundle.min.js"></script> 
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script> 
     <meta charset="UTF-8">
     <link rel="stylesheet" href="style.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,8 +12,11 @@ rel="stylesheet">
     <title> </title>
 
     </head>
+    
   
     <body>
+ 
+
         <h1> Página Inicial </h1>
 
   <img src="livros.png" alt="Menu" width="150" height="150">
@@ -22,33 +25,107 @@ rel="stylesheet">
 
   <nav class="navbar bg-body-tertiary">
   <div class="container-fluid">
-    <form class="d-flex" role="search">
-      <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search"/>
+    <form id="form-pesquisa" class="d-flex" role="search">
+      <input id="termo-pesquisa" class="form-control me-2" type="search"
+             placeholder="Pesquisar" aria-label="Pesquisar"/>
       <button class="btn btn-outline-success" type="submit">Search</button>
     </form>
+    <p></p>
+  <div class ="menu-principal">
+      <a href ="ofertas.html" class="button">Ofertas</a>
+      <a href="livros.html" class="button"> Livros</a>
+      <a href="propostas.html" class="button">Propostas</a> 
+  </div>
   </div>
 </nav>
 
-<div class="form-group">
-  <input type="text" id="nome" placeholder=" " required />
-  <label for="nome">O seu nome</label>
+<div id="resultados-pesquisa"></div>
+
+<div class="galeria">
+  <img src="imagens/arttower-wisdom.jpg" alt="Livro 1">
+  <img src="imagens/biancavandijk-cat.jpg" alt="Livro 2">
+  <img src="imagens/cdd20-fantasies.jpg" alt="Livro 3">
+  <img src="imagens/cdd20-painting.jpg" alt="Livro 4">
+  <img src="imagens/chenspec-galaxy.jpg" alt="Livro 5">
+  <img src="imagens/pexels-phone.jpg" alt="Livro 6">
+  <img src="imagens/sashasan-books.png" alt="Livro 7">
+  <img src="imagens/ylanite_nietjuhart-books.jpg" alt="Livro 8">
+  <img src="imagens/ylanite_nietjuhart-vase.jpg" alt ="Livro 9">
 </div>
 
-<p></p> 
-
-<a href="livros.html" class="button"> Livros</a>
-
-<a href="ofertas.html" class="button"> Ofertas</a>
-
-<a href="propostas.html" class="button">Propostas</a> 
+<div class ="canto-direito"></div>
 
 <div class="canto-direito">
   <a href="login.html" class="button">Login</a>
 
-  <a href ="signIn.html" class="button">Signin</a>
+  <a href ="registar.html" class="button">Registar</a>
 </div>
 
+//script fica no ica no fim porque, nesse ponto, o formulário e resultados-pesquisa já foram carregados.
+<script>
+      //const declara uma variável cujo valor não pode ser atribuído novamente.
+      const formulario = document.getElementById("form-pesquisa"); //getElementById procura o formulario e o campo de pesquisa pelos id
+      const campo = document.getElementById("termo-pesquisa");
+      const resultados = document.getElementById("resultados-pesquisa");
 
+      formulario.addEventListener("submit", async function (evento) { //executa o codigo quando a pesquisa é enviada
+        evento.preventDefault(); //impede o formulario de recarrregar a pag
+        
+        const termo = campo.value.trim().toLowerCase(); //obtem o texto pesquisadp, remove espaços nas pontas e converte-o para minusculas
+        resultados.replaceChildren();
+
+        if (!termo){
+          resultados.textContent = "Pesquisar";
+          return;
+        }
+
+        try{
+          const[respostaUtilizadores, respostaOfertas] = await Promise.all([
+            fetch("api/utilizador"),
+            fetch("api/oferta")
+          ]);
+
+          if (!respostaUtilizadores.ok || !respostaOfertas.ok){
+            throw new Error ("Erro ao consultar o servidor");
+          }
+
+          const dadosUtilizadores = await respostaUtilizadores.json();
+          const dadosOfertas = await respostaOfertas.json();
+
+          const utilizadores = Array.isArray(dadosUtilizadores)
+          ? dadosUtilizadores
+          : [dadosUtilizadores];
+
+          const encontrados = [ // inicia a lista.
+            ...utilizadores //inclui os utilizadores na pesquisa.
+            .filter(item => JSON.stringify(item).toLowerCase().includes(termo)) //mantém os itens cujo conteúdo, convertido para texto minúsculo, contém o termo pesquisado.
+            .map(item => ({tipo: "Utilizador", dados: item})), //transforma cada correspondência num objeto com o tipo "Utilizador" e os respetivos dados.
+            ...dadosOfertas //O ... junta os resultados dos dois blocos na mesma lista. 
+            .filter(item => JSON.stringify(item).toLowerCase().includes(termo))
+            .map(item => ({ tipo: "Oferta/livro", dados: item }))
+        ];
+          if (encontrados.length ===0){
+            resultados.textContent = "Não foram encontrados resultados.";
+            return;
+          }
+
+          encontrados.forEach(function(item) {
+            const secao = document.createElement("section");
+            const titulo = document.createElement("h3");
+            const detalhes = document.createElement("pre");
+
+            titulo.textContent = item.tipo;
+            detalhes.textContent = JSON.stringify(item.dados, null, 2);
+
+            secao.append(titulo, detalhes);
+            resultados.appendChild(secao);
+          });
+        }catch(erro){
+          resultados.textContent = "Não foi possível pesquisar."
+        }
+        
+      });
+    </script>
     </body>
 
 </html>

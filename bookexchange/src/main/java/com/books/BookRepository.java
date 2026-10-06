@@ -14,7 +14,7 @@ public class BookRepository {
     private EntityManager em; // o entity manager é o que fala com a base de dados, faz a comunicaçao entre as bases de dados (persistence)
 
     public void createBook(Livro livro) {
-        em.persist(livro);
+        em.persist(livro); //em abreviado de entity manager
     
     }
 
