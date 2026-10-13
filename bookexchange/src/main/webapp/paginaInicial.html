@@ -65,7 +65,7 @@ rel="stylesheet">
           return; 
         }
 
-        const paragrafo = document.createElement("p"); //Cria um elemento HTML <p>.
+        const paragrafo = document.createElement("p"); 
         const etiqueta = document.createElement("strong"); //Cria um elemento <strong>, usado para destacar o nome do detalhe.
         etiqueta.textContent = `${rotulo}: `; //Coloca no <strong> o rótulo seguido de dois pontos, por exemplo, Autor: .
         paragrafo.append(etiqueta, document.createTextNode(String(valor))); //Coloca o rótulo e o valor dentro do parágrafo. String(valor) converte o valor para texto.
@@ -111,7 +111,10 @@ rel="stylesheet">
 
       async function carregarOfertas() {
         try {
-          const resposta = await fetch("api/oferta");
+          const resposta = await fetch("api/oferta", { //o metodo fetch aceita 2 arg, um caminho e o restante codigo
+                method: "GET",
+                headers: { "Content-Type": "application/json" },
+            });
           if (!resposta.ok) {
             throw new Error("Erro ao consultar as ofertas.");
           }
