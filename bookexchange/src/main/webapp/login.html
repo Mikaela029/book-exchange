@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Iniciar sessão</title>
+</head>
+    <body>
+        <h1>Iniciar Sessão</h1>
+
+        <form id="form-login">
+            <label for="email">Email</label>
+            <input id="email" type="email" required>
+
+            <label for="password">Palavra-passe</label>
+            <input id="password" type="password" required>
+
+            <button type="submit">Entrar</button>
+
+            <a href="paginaInicial.html" class="form-registo button">Página Inicial</a>
+        </form>
+
+        <p id="mensagem"></p>
+
+        <script>
+          document.getElementById("form-login").addEventListener("submit", async function (evento) {
+            evento.preventDefault();
+
+            const mensagem = document.getElementById("mensagem");
+
+            try {
+            const resposta = await fetch("/api/utilizador/login", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                email: document.getElementById("email").value,
+                password: document.getElementById("password").value
+                })
+            });
+
+            mensagem.textContent = resposta.ok
+                ? "Login efetuado com sucesso"
+                : "Email ou palavra-passe incorretos";
+            } catch {
+            mensagem.textContent = "Não foi possível contactar o servidor.";
+            }
+        });
+        </script>
+    </body>
+</html>

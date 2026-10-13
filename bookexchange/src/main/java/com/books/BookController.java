@@ -1,5 +1,7 @@
 package com.books;
 
+import java.util.ArrayList;
+
 import jakarta.inject.Inject;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.POST;
@@ -25,15 +27,7 @@ private BookService service;
                 return resposta;
         }
 
-        /*
-        @GET
-        public Response getAllBooks() {
-                
-                Response.ResponseBuilder responseBuilder = Response.ok();
-                
-                Response resposta = responseBuilder.entity(new Livro()).build(); //Livro é o método da classe livro para criar um novo, ()é o construtor vazio. este comando cria um livro vazio para o json ler, ainda é de teste
-                return resposta;
-        }       */
+
        @GET
         public Response getAllBooks() {
                 return Response.ok(service.getAllBooks()).build();

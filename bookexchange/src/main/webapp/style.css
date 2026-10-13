@@ -55,6 +55,29 @@
   outline: 4px solid #0095ff;
 }
 
+#ofertas {
+  max-width: 800px;
+  margin: 30px auto;
+  padding: 0 16px;
+}
+
+.oferta {
+  margin: 10px 0;
+  border: 1px solid #2188ad;
+  border-radius: 6px;
+  background-color: #fff;
+}
+
+.oferta summary {
+  padding: 14px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.detalhes-oferta {
+  padding: 0 14px 10px;
+}
+
 .navbar .container-fluid {
   display: flex;
   flex-direction: column;

@@ -39,19 +39,11 @@ rel="stylesheet">
   </div>
 </nav>
 
-<div id="resultados-pesquisa"></div>
-
-<div class="galeria">
-  <img src="imagens/arttower-wisdom.jpg" alt="Livro 1">
-  <img src="imagens/biancavandijk-cat.jpg" alt="Livro 2">
-  <img src="imagens/cdd20-fantasies.jpg" alt="Livro 3">
-  <img src="imagens/cdd20-painting.jpg" alt="Livro 4">
-  <img src="imagens/chenspec-galaxy.jpg" alt="Livro 5">
-  <img src="imagens/pexels-phone.jpg" alt="Livro 6">
-  <img src="imagens/sashasan-books.png" alt="Livro 7">
-  <img src="imagens/ylanite_nietjuhart-books.jpg" alt="Livro 8">
-  <img src="imagens/ylanite_nietjuhart-vase.jpg" alt ="Livro 9">
-</div>
+<section id="ofertas">
+  <h2>Ofertas</h2>
+  <p id="mensagem-ofertas" role="status">A carregar ofertas...</p>
+  <div id="lista-ofertas"></div>
+</section>
 
 <div class ="canto-direito"></div>
 
@@ -61,70 +53,94 @@ rel="stylesheet">
   <a href ="registar.html" class="button">Registar</a>
 </div>
 
-//script fica no ica no fim porque, nesse ponto, o formulário e resultados-pesquisa já foram carregados.
 <script>
-      //const declara uma variável cujo valor não pode ser atribuído novamente.
-      const formulario = document.getElementById("form-pesquisa"); //getElementById procura o formulario e o campo de pesquisa pelos id
-      const campo = document.getElementById("termo-pesquisa");
-      const resultados = document.getElementById("resultados-pesquisa");
+      const formulario = document.getElementById("form-pesquisa"); //Procura na página o formulário de pesquisa, que tem id="form-pesquisa", e guarda-o na constante formulario.
+      const campo = document.getElementById("termo-pesquisa"); //Procura o campo onde se escreve o texto a pesquisar e guarda-o em campo.
+      const listaOfertas = document.getElementById("lista-ofertas"); //Procura o elemento HTML onde as ofertas vão ser apresentadas.
+      const mensagemOfertas = document.getElementById("mensagem-ofertas"); //Procura o elemento que mostra mensagens, como “A carregar ofertas...” ou “Não foram encontradas ofertas”.
+      let ofertas = []; //cria lista inicialmente vazia, guardando depois as ofertas recebidas do servidor. Usa-se let porque o valor da variavel sera substituido
 
-      formulario.addEventListener("submit", async function (evento) { //executa o codigo quando a pesquisa é enviada
-        evento.preventDefault(); //impede o formulario de recarrregar a pag
-        
-        const termo = campo.value.trim().toLowerCase(); //obtem o texto pesquisadp, remove espaços nas pontas e converte-o para minusculas
-        resultados.replaceChildren();
-
-        if (!termo){
-          resultados.textContent = "Pesquisar";
-          return;
+      function adicionarDetalhe(elemento, rotulo, valor) { //Define uma função que acrescenta um detalhe à oferta. Recebe o elemento onde vai escrever, o nome do detalhe e o respetivo valor.
+        if (valor === null || valor === undefined || valor === "") { //Verifica se o valor não existe ou está vazio. Se estiver, return termina a função sem apresentar esse detalhe
+          return; 
         }
 
-        try{
-          const[respostaUtilizadores, respostaOfertas] = await Promise.all([
-            fetch("api/utilizador"),
-            fetch("api/oferta")
-          ]);
+        const paragrafo = document.createElement("p"); //Cria um elemento HTML <p>.
+        const etiqueta = document.createElement("strong"); //Cria um elemento <strong>, usado para destacar o nome do detalhe.
+        etiqueta.textContent = `${rotulo}: `; //Coloca no <strong> o rótulo seguido de dois pontos, por exemplo, Autor: .
+        paragrafo.append(etiqueta, document.createTextNode(String(valor))); //Coloca o rótulo e o valor dentro do parágrafo. String(valor) converte o valor para texto.
+        elemento.appendChild(paragrafo); //Acrescenta o parágrafo ao elemento que contém os detalhes da oferta.
+      }
 
-          if (!respostaUtilizadores.ok || !respostaOfertas.ok){
-            throw new Error ("Erro ao consultar o servidor");
-          }
+      function mostrarOfertas(ofertasFiltradas) { //Define a função que apresenta a lista de ofertas recebida como argumento.
+        listaOfertas.replaceChildren(); //Remove os elementos anteriormente apresentados, para que a lista seja reconstruída sem duplicados.
 
-          const dadosUtilizadores = await respostaUtilizadores.json();
-          const dadosOfertas = await respostaOfertas.json();
-
-          const utilizadores = Array.isArray(dadosUtilizadores)
-          ? dadosUtilizadores
-          : [dadosUtilizadores];
-
-          const encontrados = [ // inicia a lista.
-            ...utilizadores //inclui os utilizadores na pesquisa.
-            .filter(item => JSON.stringify(item).toLowerCase().includes(termo)) //mantém os itens cujo conteúdo, convertido para texto minúsculo, contém o termo pesquisado.
-            .map(item => ({tipo: "Utilizador", dados: item})), //transforma cada correspondência num objeto com o tipo "Utilizador" e os respetivos dados.
-            ...dadosOfertas //O ... junta os resultados dos dois blocos na mesma lista. 
-            .filter(item => JSON.stringify(item).toLowerCase().includes(termo))
-            .map(item => ({ tipo: "Oferta/livro", dados: item }))
-        ];
-          if (encontrados.length ===0){
-            resultados.textContent = "Não foram encontrados resultados.";
-            return;
-          }
-
-          encontrados.forEach(function(item) {
-            const secao = document.createElement("section");
-            const titulo = document.createElement("h3");
-            const detalhes = document.createElement("pre");
-
-            titulo.textContent = item.tipo;
-            detalhes.textContent = JSON.stringify(item.dados, null, 2);
-
-            secao.append(titulo, detalhes);
-            resultados.appendChild(secao);
-          });
-        }catch(erro){
-          resultados.textContent = "Não foi possível pesquisar."
+        if (ofertasFiltradas.length === 0) {
+          mensagemOfertas.textContent = ofertas.length === 0
+            ? "Ainda não existem ofertas."
+            : "Não foram encontradas ofertas.";
+          return; //Escolhe a mensagem adequada:~
+          //Se a lista total ofertas estiver vazia, ainda não existem ofertas.
+          //Se existirem ofertas, mas nenhuma corresponder à pesquisa, não foram encontradas ofertas.
         }
-        
+
+        mensagemOfertas.textContent = "";
+
+        ofertasFiltradas.forEach(oferta => {
+          const livro = oferta.livro || {};
+          const utilizador = oferta.utilizador || {};
+          const detalhes = document.createElement("details");
+          detalhes.className = "oferta";
+
+          const resumo = document.createElement("summary");
+          resumo.textContent =
+            `${livro.titulo || "Livro sem título"} — ${oferta.localizacao || "Localização não indicada"}`;
+
+          const informacao = document.createElement("div");
+          informacao.className = "detalhes-oferta";
+          adicionarDetalhe(informacao, "Autor", livro.autor);
+          adicionarDetalhe(informacao, "Título", livro.nome || livro.titulo);
+          adicionarDetalhe(informacao, "Edição", livro.edicao);
+          adicionarDetalhe(informacao, "Tipo de capa", livro.tipoCapa);
+          adicionarDetalhe(informacao, "Língua", livro.lingua);
+
+          detalhes.append(resumo, informacao);
+          listaOfertas.appendChild(detalhes);
+        });
+      }
+
+      async function carregarOfertas() {
+        try {
+          const resposta = await fetch("api/oferta");
+          if (!resposta.ok) {
+            throw new Error("Erro ao consultar as ofertas.");
+          }
+
+          const dados = await resposta.json();
+          if (!Array.isArray(dados)) {
+            throw new Error("A resposta da API não contém uma lista de ofertas.");
+          }
+
+          ofertas = dados;
+          mostrarOfertas(ofertas);
+        } catch (erro) {
+          mensagemOfertas.textContent = "Não foi possível carregar as ofertas.";
+        }
+      }
+
+      formulario.addEventListener("submit", function (evento) {
+        evento.preventDefault();
+        const termo = campo.value.trim().toLocaleLowerCase();
+        const ofertasFiltradas = ofertas.filter(oferta => {
+          const livro = oferta.livro || {};
+          return `${livro.titulo || ""} ${oferta.localizacao || ""}`
+            .toLocaleLowerCase()
+            .includes(termo);
+        });
+        mostrarOfertas(ofertasFiltradas);
       });
+
+      carregarOfertas();
     </script>
     </body>
 

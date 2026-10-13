@@ -8,7 +8,6 @@ import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Path;
-import jakarta.ws.rs.QueryParam;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 
@@ -31,23 +30,25 @@ public class UtilizadorController {
         return Response.ok(service.getAllUsers()).build();
     }
 
-@GET 
-@Path ("/login") //endereço completo para aceder e /api/utilizador/login
-@Produces (MediaType.APPLICATION_JSON) //Indica que o método devolve dados no formato JSON.
-public Response login(
-    @QueryParam("email") String email, //Obtém o email enviado no URL:
-    @QueryParam ("password") String password) { //Obtém a pass enviada no URL:
+@POST
+@Path("/login")
+@Consumes(MediaType.APPLICATION_JSON)
+public Response login(Utilizador credenciais) {
+    if (credenciais == null 
+        || credenciais.getEmail() == null 
+        || credenciais.getPassword() == null) {
+        return Response.status(Response.Status.BAD_REQUEST).build();
+    }
 
-    Utilizador utilizador = service.login(email, password);
+    Utilizador utilizador = service.login(credenciais.getEmail(), credenciais.getPassword());
 
-    if (utilizador == null){ //Se o repository não encontrar nenhum utilizador com esse email e password, devolve null.
-        return Response
-        .status(Response.Status.UNAUTHORIZED)
-        .entity("Email ou Password incorretos")
-        .build();
+    if (utilizador == null) {
+        return Response.status(Response.Status.UNAUTHORIZED)
+            .entity("Email ou Password incorretos")
+            .build();
     }
     
-    return Response.ok(utilizador).build(); //resposta do login valido
+    return Response.ok().build();
 }
 
 }

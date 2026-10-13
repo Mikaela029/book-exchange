@@ -21,11 +21,11 @@ public class Oferta {
     }
 
     @ManyToOne//oferta associada a um livro
-    @JoinColumn (name = "idLivro") //na tabela da oferta o JPA cria/usa uma coluna chamada idLivro para guardar a FK do livro
+    @JoinColumn (name = "idLivro", nullable = false) //na tabela da oferta o JPA cria/usa uma coluna chamada idLivro para guardar a FK do livro
     private Livro livro; //a classe Oferta guarda uma referencia ao objeto Livro, e nao repete a info (titulo autor...)
 
     @ManyToOne
-    @JoinColumn (name = "idUtilizador") 
+    @JoinColumn (name = "idUtilizador", nullable = false) //nullable = false indica que a coluna da chave estrangeira não pode ficar a NULL na base de dados.
     private Utilizador utilizador; 
 
     //getters setters
